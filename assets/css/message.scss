@@ -1,0 +1,107 @@
+$font: "SF Pro Text", sans-serif;
+$font-color: #CBCED3;
+$font-size: 39.5px;
+$time-font-size: 30px;
+$time-font-color: #7C838B;
+$message-color: #1A222F;
+$message-width: 910px;
+$message-height: 210px;
+
+html, body{
+    margin: 10px;
+    padding: 0;
+    background-color:#f5f6fc;
+}
+
+p{
+    margin: 0;
+}
+
+.container{
+    margin-left: auto;
+    margin-right: auto;
+    height: 90vh;
+    max-height: 1180px;
+    width: 100%;
+    max-width: 1080px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../assets/img/background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    transform: scale(0.9);
+}
+
+.message{
+    width: $message-width;
+    background-color: $message-color;
+    font-family: $font;
+    font-size: $font-size;
+    color: $font-color;
+}
+
+.message__content{
+    margin-left: 52px;
+    padding-top: 40px;
+    margin-right: 52px;
+    display: flex;
+    justify-content: space-between;
+}
+.content__text{
+    max-width: 700px;
+    justify-self: flex-start;
+    word-wrap: break-word;
+}
+.message__threedots{
+    justify-self: flex-end;
+    align-self: flex-start;
+}
+.message__addons{
+    margin-left: 90px;
+    margin-right: 110px;
+    margin-top: 30px;
+    padding-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: $time-font-size;
+    color: $time-font-color;
+}
+
+.form {
+    margin-top: 40px;
+    display: flex;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 10px;
+}
+.input {
+    width: 90%;
+    max-width: 700px;
+    font-size: 20px;
+    padding: 5px;
+}
+#download{
+    font-size: 25px;
+    display: block;
+    background-color: #48c774;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    color: white;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    white-space: nowrap;
+    border-radius: 4px;
+    align-self: center;
+}
+
+@font-face {
+    font-family: "San Pro Text";
+    font-weight: 400;
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscotext-regular-webfont.woff");
+  }
