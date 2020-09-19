@@ -120,9 +120,12 @@ p {
       align-self: center;
 }
 
+#download:hover {
+  background-color: #399459;
+}
+
 @font-face {
   font-family: "San Pro Text";
-  font-weight: 400;
   src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscotext-regular-webfont.woff");
 }
 /*# sourceMappingURL=message.css.map */
