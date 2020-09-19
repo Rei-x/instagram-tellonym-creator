@@ -102,6 +102,7 @@ p {
 }
 
 #download {
+  font-family: "SF Pro Text", sans-serif;
   font-size: 25px;
   display: block;
   background-color: #48c774;
