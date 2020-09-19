@@ -2,6 +2,7 @@ html, body {
   margin: 10px;
   padding: 0;
   background-color: #f5f6fc;
+  position: relative;
 }
 
 p {
@@ -27,8 +28,8 @@ p {
   background-image: url("../../assets/img/background.jpg");
   background-repeat: no-repeat;
   background-position: center;
-  -webkit-transform: scale(0.9);
-          transform: scale(0.9);
+  -webkit-transform: scale(0.8) translateY(-50px);
+          transform: scale(0.8) translateY(-50px);
 }
 
 .message {
@@ -128,5 +129,15 @@ p {
 @font-face {
   font-family: "San Pro Text";
   src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscotext-regular-webfont.woff");
+}
+
+@media only screen and (max-width: 600px) {
+  .container {
+    position: absolute;
+    width: 1080px;
+    height: 1180px;
+    -webkit-transform: scale(0.35) translate(calc(100vw - 1430px), -1000px);
+            transform: scale(0.35) translate(calc(100vw - 1430px), -1000px);
+  }
 }
 /*# sourceMappingURL=message.css.map */

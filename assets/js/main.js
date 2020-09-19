@@ -16,9 +16,9 @@ $(document).ready(function() {
             saveAs(canvas.toDataURL(), `tellonym${filename}.png`);
         });
 
-        document.querySelector(".container").style.width = "100%";
-        document.querySelector(".container").style.height = "90vh";
-        document.querySelector(".container").style.transform = "scale(0.9)";
+        document.querySelector(".container").style.width = "";
+        document.querySelector(".container").style.height = "";
+        document.querySelector(".container").style.transform = "";
     });
     
     
