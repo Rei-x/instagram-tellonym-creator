@@ -12,7 +12,7 @@ $(document).ready(function() {
 
         html2canvas(document.querySelector('.container')).then(function(canvas) {
     
-            let filename = new Date().getTime() / 1000;
+            let filename = new Date().getTime();
             saveAs(canvas.toDataURL(), `tellonym${filename}.png`);
         });
 
