@@ -35,7 +35,7 @@ p {
 .message {
   width: 910px;
   background-color: #1A222F;
-  font-family: "SF Pro Text", sans-serif;
+  font-family: SF Pro Text, Helvetica, Roboto, Arial, sans-serif;
   font-size: 39.5px;
   color: #CBCED3;
 }
@@ -103,7 +103,7 @@ p {
 }
 
 #download {
-  font-family: "SF Pro Text", sans-serif;
+  font-family: SF Pro Text, Helvetica, Roboto, Arial, sans-serif;
   font-size: 20px;
   display: block;
   background-color: #48c774;
@@ -136,8 +136,8 @@ p {
     position: absolute;
     width: 1080px;
     height: 1180px;
-    -webkit-transform: scale(0.35) translate(calc(100vw - 1430px), -1000px);
-            transform: scale(0.35) translate(calc(100vw - 1430px), -1000px);
+    -webkit-transform: scale(0.35) translate(calc(120vw - 1510px), -1000px);
+            transform: scale(0.35) translate(calc(120vw - 1510px), -1000px);
   }
 }
 /*# sourceMappingURL=message.css.map */

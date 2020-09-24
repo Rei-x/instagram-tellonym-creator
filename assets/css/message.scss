@@ -1,4 +1,4 @@
-$font: "SF Pro Text", sans-serif;
+$font: SF Pro Text, Helvetica, Roboto, Arial, sans-serif;
 $font-color: #CBCED3;
 $font-size: 39.5px;
 $time-font-size: 30px;
@@ -115,6 +115,6 @@ p{
     position: absolute;
     width: 1080px;
     height: 1180px;
-    transform: scale(0.35) translate(calc(100vw - 1430px), -1000px);
+    transform: scale(0.35) translate(calc(120vw - 1510px), -1000px);
     }
   }
