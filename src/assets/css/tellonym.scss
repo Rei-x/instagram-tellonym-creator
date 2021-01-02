@@ -1,15 +1,23 @@
 $font: SF Pro Text, Helvetica, Roboto, Arial, sans-serif;
 $font-color: #CBCED3;
+$tellonym-height: 20rem;
 $time-font-size: 0.5rem;
 $time-font-color: #7C838B;
 $message-color: #1A222F;
 $message-width: 15rem;
 $message-height: 10rem;
 
+.container__wrapper{
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+
 .tellonym{
+    position: absolute;
     margin-left: auto;
     margin-right: auto;
-    height: 20rem;
+    height: $tellonym-height;
     width: 100%;
     display: flex;
     justify-content: center;
@@ -18,6 +26,7 @@ $message-height: 10rem;
     background-repeat: no-repeat;
     background-position: center;
     background-size: contain;
+    transform: scale(0.94);
 }
 .message{
     width: $message-width;
