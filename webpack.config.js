@@ -7,11 +7,12 @@ const config = (_, {mode}) => ({
   entry: './src/index.js',
   output: {
     path: path.resolve(__dirname, 'dist'),
-    filename: '[name].[contenthash].js',
-    publicPath: './'
+    filename: '[name].bundle.js',
+    publicPath : ''
   },
   devServer: {
-    contentBase: './dist',
+    contentBase: path.join(__dirname, 'dist'),
+    port: 3000
   },
   module: {
     rules: [
@@ -35,10 +36,10 @@ const config = (_, {mode}) => ({
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html'
+      template: path.join(__dirname, 'src', 'index.html')
     }),
     new MiniCssExtractPlugin({filename: "[name].[contenthash].css"}),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false })
   ]
 });
 

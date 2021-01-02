@@ -1,0 +1,22 @@
+.button{
+    width: 5rem;
+    height: 5rem;
+    background-color: white;
+    border: none;
+    border-radius: 5rem;
+    outline: none;
+    background-position: center;
+    background-size: contain;
+    cursor: pointer;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+}
+.edit{
+    background-image: url("../img/edit.svg"); 
+}
+.delete{
+    background-image: url("../img/delete.svg"); 
+}
+.download{
+    background-image: url("../img/download.svg"); 
+}
