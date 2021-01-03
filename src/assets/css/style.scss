@@ -5,14 +5,16 @@ body{
     margin: 0;
     padding: 0;
     font-size: $font-size;
+    overflow: hidden;
 }
 .header{
     margin-top: 3rem;
     display: flex;
     justify-content: center;
-}
-.header__logo{
-    width: 16rem;
+    
+    &__logo{
+        width: 16rem;
+    }
 }
 .container{
     margin-top: 3rem;
@@ -21,10 +23,10 @@ body{
     display: flex;
     flex-direction: column;
     align-items: center;
-}
-.container__buttons{
-    margin-top: 1rem;
-    max-width: 40rem;
-    display: flex;
-    justify-content: space-evenly;
+    &__buttons{
+        margin-top: 1rem;
+        max-width: 40rem;
+        display: flex;
+        justify-content: space-evenly;
+    }
 }

@@ -2,6 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
 
 const config = (_, {mode}) => ({
   entry: './src/index.js',
@@ -30,8 +31,12 @@ const config = (_, {mode}) => ({
       },
       {
         test: /\.(svg|jpg|gif|png)$/,
-        use: 'file-loader'
-      },
+        loader: 'file-loader',
+        options: {
+          name: '[name].[contenthash].[ext]'
+        }    
+        
+      }
     ]
   },
   plugins: [
@@ -39,7 +44,25 @@ const config = (_, {mode}) => ({
       template: path.join(__dirname, 'src', 'index.html')
     }),
     new MiniCssExtractPlugin({filename: "[name].[contenthash].css"}),
-    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false })
+    new CleanWebpackPlugin({ cleanStaleWebpackAssets: false }),
+    new ImageMinimizerPlugin({
+      minimizerOptions: {
+        plugins: [  
+          ['jpegtran', { progressive: true }],
+          ['optipng', { optimizationLevel: 5 }],
+          [
+            'svgo',
+            {
+              plugins: [
+                {
+                  removeViewBox: false,
+                },
+              ],
+            },
+          ]
+        ]
+      }
+    })
   ]
 });
 

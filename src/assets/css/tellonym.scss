@@ -1,6 +1,7 @@
 $font: SF Pro Text, Helvetica, Roboto, Arial, sans-serif;
 $font-color: #CBCED3;
 $tellonym-height: 20rem;
+$tellonym-width: 20rem;
 $time-font-size: 0.5rem;
 $time-font-color: #7C838B;
 $message-color: #1A222F;
@@ -15,10 +16,12 @@ $message-height: 10rem;
 
 .tellonym{
     position: absolute;
+    right: 0;
+    left: 0;
     margin-left: auto;
     margin-right: auto;
     height: $tellonym-height;
-    width: 100%;
+    width: $tellonym-width;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -27,6 +30,29 @@ $message-height: 10rem;
     background-position: center;
     background-size: contain;
     transform: scale(0.94);
+
+    &__message{
+        position: absolute;
+        background-position: center;
+        background-repeat: no-repeat;
+        width: 5rem;
+        height: 5rem;
+        bottom: 0;
+        opacity: 0;
+        transition: opacity .15s ease-out;
+        &--discard{
+            left: 1rem;
+            background-image: url("../img/watermark/Discard.svg");
+        }
+        &--download{
+            right: 1rem;
+            background-image: url("../img/watermark/Download.svg");
+        }
+        &--edit{
+            background-image: url("../img/watermark/Edit.svg");
+        }
+    }
+    
 }
 .message{
     width: $message-width;
@@ -35,36 +61,47 @@ $message-height: 10rem;
     font-size: 0.8rem;
     color: $font-color;
     user-select: none;
-}
 
-.message__content{
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;
-    display: flex;
-    justify-content: space-between;
+    &__content{
+        margin-left: 0.8rem;
+        margin-right: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+    }
+
+    &__threedots{
+        margin-top: 0.9rem;
+        height: 1rem;
+        justify-self: flex-end;
+        align-self: flex-start;
+        user-select: none;
+    }
+
+    &__addons{
+        margin-left: 0.8rem;
+        margin-right: 0.8rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: $time-font-size;
+        color: $time-font-color;
+    }
+    &__comment{
+        width: 1rem;
+    }
 }
 .content__text{
     max-width: 700px;
     justify-self: flex-start;
     word-wrap: break-word;
 }
-.message__threedots{
-    margin-top: 0.9rem;
-    height: 1rem;
-    justify-self: flex-end;
-    align-self: flex-start;
-}
-.message__addons{
-    margin-left: 0.8rem;
-    margin-right: 0.8rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-size: $time-font-size;
-    color: $time-font-color;
-}
-.message__comment{
-    width: 1rem;
+.no_drag{
+    user-drag: none; 
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 @font-face {
     font-family: "San Pro Text";
