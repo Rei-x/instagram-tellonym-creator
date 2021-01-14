@@ -1,21 +1,21 @@
 .button{
     width: 5rem;
     height: 5rem;
-    background-color: white;
+    margin-right: 0.5rem;
+    margin-left: 0.5rem;
+    background-color: transparent;
+    background-position: center;
+    background-size: contain;
     border: none;
     border-radius: 5rem;
     outline: none;
-    background-position: center;
-    background-size: contain;
     cursor: pointer;
-    margin-top: $tellonym-height;
-    margin-right: 0.5rem;
-    margin-left: 0.5rem;
+    -webkit-tap-highlight-color: transparent;
 }
 .edit{
     background-image: url("../img/edit.svg"); 
 }
-.delete{
+.discard{
     background-image: url("../img/delete.svg"); 
 }
 .download{

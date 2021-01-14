@@ -6,15 +6,21 @@
     <title>Telloner</title>
 </head>
 <body>
+    <section class="login">
+
+    </section>
     <header class="header">
         <img class="header__logo no_drag" alt="logo" src="./assets/img/logo.svg">
     </header>
     <main>
-        <div class="container">
+        <section class="container">
             <div class="container__wrapper">
                 <div class="tellonym">
-                    <div class="tellonym__message tellonym__message--download">Download</div>
-                    <div class="tellonym__message tellonym__message--edit">Edit</div>
+                    <p class="message"> wszystko mordeczko</p>
+                </div>
+                <div class="tellonym tellonym--active">
+                    <div class="tellonym__message tellonym__message--download"></div>
+                    <div class="tellonym__message tellonym__message--edit"></div>
                     <div class="tellonym__message tellonym__message--discard"></div>
                     <div class="message">
                         <div class="message__content">
@@ -27,7 +33,7 @@
                             <p class="message__time">an hour ago</p>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
             <div class="container__buttons">
                 <button class="button download">
@@ -36,11 +42,14 @@
                 <button class="button edit">
 
                 </button>
-                <button class="button delete">
+                <button class="button discard">
 
                 </button>
             </div>
-        </div>
+        </section>
+        <div class="settings_button"><img class="no_drag" src="./assets/img/settings_wheel.svg"></div>
+        <section class="view_settings">
+        </section>
     </main>
 </body>
 </html>

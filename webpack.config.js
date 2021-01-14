@@ -13,7 +13,8 @@ const config = (_, {mode}) => ({
   },
   devServer: {
     contentBase: path.join(__dirname, 'dist'),
-    port: 3000
+    port: 3000,
+    host: '192.168.0.100'
   },
   module: {
     rules: [

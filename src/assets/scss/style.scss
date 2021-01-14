@@ -1,6 +1,13 @@
 $font-size: 10px;
+$logo-height: 5rem;
+$logo-margin-top: 3rem;
+$container-margin-top: 3rem;
+$tellonym-color: #FF0086;
 @import './tellonym.scss';
 @import './buttons.scss';
+@import './settings.scss';
+@import './login.scss';
+@import './util.scss';
 body{
     margin: 0;
     padding: 0;
@@ -8,18 +15,16 @@ body{
     overflow: hidden;
 }
 .header{
-    margin-top: 3rem;
+    margin-top: $logo-margin-top;
     display: flex;
     justify-content: center;
     
     &__logo{
-        width: 16rem;
+        height: $logo-height;
     }
 }
 .container{
-    margin-top: 3rem;
-    margin-right: 2rem;
-    margin-left: 2rem;
+    margin-top: $container-margin-top;
     display: flex;
     flex-direction: column;
     align-items: center;
