@@ -1,9 +1,12 @@
+    <div class="alert alert--hidden">
+    </div>
     <h1 class="login__header ">Login</h1>
     <form class="login__form">
-        <input class="login__input" type="text" placeholder="Email or Username">
-        <input class="login__input" type="password" placeholder="Password">
-        <button class="login__button">
+        <input class="login__input" type="text" name="username" placeholder="Email or Username">
+        <input class="login__input" type="password" name="password" placeholder="Password">
+        <button type="submit" class="login__button">
             Submit
-            <img class="login__logo" src="../img/tellonym_logo.svg">
+            <img class="login__logo" src="../img/login/tellonym_logo.svg">
+            <img class="loading hidden" src="../img/login/loading.svg">
         </button>
     </form>

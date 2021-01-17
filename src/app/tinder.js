@@ -1,5 +1,9 @@
 import 'hammerjs'
+import html2canvas from 'html2canvas'
 import template from "../assets/html/tellonym.html"
+import "../assets/scss/tellonym_download.scss"
+import tellonym_download_template from "../assets/html/tellonym_download.html"
+import { TellonymClient } from './login'
 /* LikeCarousel (c) 2019 Simone P.M. github.com/simonepm - Licensed MIT */
 
 export class Carousel {
@@ -7,11 +11,18 @@ export class Carousel {
     constructor(element) {
         this.board = element
         this._iconsName = ["discard", "edit", "download"]
-        let i
-        for (i = 0; i<10; i++){
-            this.push()
-        }
         
+        this.tellonym_client = new TellonymClient()
+
+        this.downloader = new TellonymHandler()
+
+        
+        this.tellonym_client.getTellonyms(function(data) {
+            let x 
+            for (x of data){
+                this.push(x.fields.text, x.pk)
+            }
+        }.bind(this))
         this.handle()
     }
 
@@ -122,24 +133,34 @@ export class Carousel {
             this.isPanning = false
 
             let successful = false
-
+            
             this.topCard.style.transition = 'transform 800ms ease-out'
             if (this.nextCard) this.nextCard.style.transition = 'transform 100ms linear'
 
             if (propX > 0.25 && e.direction == Hammer.DIRECTION_RIGHT) {
                 successful = true
                 posX = window.innerWidth + this.topCard.clientWidth
+                this.tellonym_client.updateTellonym(this.topCard.id, "DISCARDED")
 
             } else if (propX < -0.25 && e.direction == Hammer.DIRECTION_LEFT) {
                 successful = true
                 posX = -(window.innerWidth + this.topCard.clientWidth)
+                this.tellonym_client.updateTellonym(this.topCard.id, "ACCEPTED")
+                this.downloader.download(this.topCard.querySelector(".content__text").innerHTML)
 
             } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
 
-                successful = true
-                // get top border position
-                posY = -(window.innerHeight+this.topCard.clientHeight)
+                successful = false
+                
+                let content_text = this.topCard.querySelector(".content__text")
+                content_text.contentEditable = true
+                setTimeout(function() {
+                    content_text.focus();
+                    setEndOfContenteditable(content_text)
+                }, 0);
+                
 
+                
             }
 
             if (successful) {
@@ -152,8 +173,7 @@ export class Carousel {
                 setTimeout(() => {
                     // remove swiped card
                     this.board.removeChild(this.topCard)
-                    // add new card
-                    this.push()
+                    this.handle()
                 }, 200)
 
             } else {
@@ -196,14 +216,86 @@ export class Carousel {
         
     }
 
-    push() {
+    push(text, id) {
         let card = document.createElement('div')
         card.innerHTML = template
+
+        let tellonym = card.firstChild
+
+        tellonym.querySelector(".content__text").innerHTML = text
+        tellonym.id = id
+
+        this.board.insertBefore(tellonym, this.board.childNodes[2])
+        this.handle()
+        /*
         fetch('https://baconipsum.com/api/?type=all-meat&sentences=1&format=text')
         .then(response => response.text()).then(result => {
             card.firstChild.querySelector(".content__text").innerHTML = result
             this.board.insertBefore(card.firstChild, this.board.childNodes[2])
             this.handle()
         })
+        */
         }
+}
+
+class TellonymHandler{
+
+    constructor(){
+        let div = document.createElement('div')
+        div.innerHTML = tellonym_download_template
+        document.body.appendChild(div.firstChild)
+        this.tellonym = document.querySelector(".container-download")
+    }
+
+    download(text){
+        this.tellonym.querySelector(".content__text-download").innerHTML = text
+        html2canvas(this.tellonym).then(function(canvas) {
+            let filename = text + "." + new Date().getTime()
+            this._saveAs(canvas.toDataURL(), `${filename}.png`)
+        }.bind(this));
+
+    }
+
+    _saveAs(uri, filename) {
+    
+        var link = document.createElement('a');
+    
+        if (typeof link.download === 'string') {
+    
+            link.href = uri;
+            link.download = filename;
+    
+            document.body.appendChild(link);
+    
+            link.click();
+    
+            document.body.removeChild(link);
+    
+        } else {
+    
+            window.open(uri);
+    
+        }
+    }
+}
+
+function setEndOfContenteditable(contentEditableElement)
+{
+    var range,selection;
+    if(document.createRange)//Firefox, Chrome, Opera, Safari, IE 9+
+    {
+        range = document.createRange();//Create a range (a range is a like the selection but invisible)
+        range.selectNodeContents(contentEditableElement);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        selection = window.getSelection();//get the selection object (allows you to change selection)
+        selection.removeAllRanges();//remove any selections already made
+        selection.addRange(range);//make the range you have just created the visible selection
+    }
+    else if(document.selection)//IE 8 and lower
+    { 
+        range = document.body.createTextRange();//Create a range (a range is a like the selection but invisible)
+        range.moveToElementText(contentEditableElement);//Select the entire contents of the element with the range
+        range.collapse(false);//collapse the range to the end point. false means collapse to end rather than the start
+        range.select();//Select the range (make it the visible selection
+    }
 }

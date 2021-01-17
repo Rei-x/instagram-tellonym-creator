@@ -7,6 +7,7 @@
     z-index: 2;
     &__header{
         font-size: 1.7rem;
+        font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         text-align: center;
         font-style: italic;
         margin-top: 5rem;
@@ -33,6 +34,7 @@
     &__button{
         appearance: none;
         display: flex;
+        width: 9rem;
         font-size: 1.1rem;
         font-family: $font;
         letter-spacing: 0.1rem;
@@ -47,12 +49,46 @@
         cursor: pointer;
         padding-top: 0.4rem;
         padding-bottom: 0.3rem;
-        padding-left: 1.3rem;
+        padding-left: 1.6rem;
         padding-right: 1.2rem;
         
     }
     &__logo{
         margin-left: 0.6rem;
         height: 1.5rem;
+    }
+    &__loading{
+        height: 1.5rem;
+        display: block;
+        animation: rotate 0.7s infinite;
+        animation-timing-function: linear;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+.alert{
+    position: fixed;
+    display: flex;
+    align-items: center;
+    top: 0;
+    height: 3rem;
+    width: 100vw;
+    padding-left: 2rem;
+    font-size: 1rem;
+    font-family: $font;
+    background-color: #a94442;
+    color: white;
+    transition: ease-in-out 500ms;
+    &--hidden{
+        transform: translateY(-100%);
+    }
+}
+
+@keyframes rotate {
+    0% {
+        transform: rotate(0);
+    }
+    100% {
+        transform: rotate(360deg);
     }
 }

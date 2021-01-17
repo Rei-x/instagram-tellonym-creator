@@ -3,4 +3,10 @@
 }
 .hidden{
     visibility: hidden;
+    display: none;
+}
+.fade{
+    transition: ease-in-out 500ms;
+    pointer-events: none;
+    opacity: 0;
 }

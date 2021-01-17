@@ -4,12 +4,22 @@ import { Login } from './app/login'
 import settings from './assets/html/settings.html'
 
 
+
+
 let board = document.querySelector('.container__wrapper')
 
-let carousel = new Carousel(board)
-
 let login = new Login()
-console.log("piesek:" + login.dog)
+
+var checkExist = setInterval(function() {
+    if (login.logged == true) {
+        window.carousel = new Carousel(board)
+       clearInterval(checkExist);
+    }
+ }, 200);
+
+
+
+
 
 const animate_settings = () => {
     document.querySelector('.view_settings').classList.toggle('slide_in')
@@ -17,7 +27,7 @@ const animate_settings = () => {
 }
 
 document.querySelector('.download').addEventListener("click", () => {
-    carousel.swipe()
+    window.carousel.swipe()
 })
 document.querySelector('.settings_button').addEventListener("click", () => {
     animate_settings()

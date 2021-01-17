@@ -1,0 +1,68 @@
+.container-download{
+    position: absolute;
+    right: 9999px;
+    height: 1180px;
+    width: 1080px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url("../../assets/img/background.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+}
+
+.message-download{
+    width: 910px;
+    background-color: #1A222F;
+    font-family: SF Pro Text, Helvetica, Roboto, Arial, sans-serif;
+    font-size: 39.5px;
+    color: #CBCED3;
+}
+
+.message__content-download{
+    margin-left: 52px;
+    padding-top: 40px;
+    margin-right: 52px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+}
+.content__text-download{
+    margin: 0;
+    max-width: 700px;
+    justify-self: flex-start;
+    word-wrap: break-word;
+}
+.message__threedots-download{
+    justify-self: flex-end;
+    align-self: flex-start;
+}
+.message__addons-download{
+    margin-left: 90px;
+    margin-right: 110px;
+    margin-top: 30px;
+    padding-bottom: 20px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: justify;
+    -ms-flex-pack: justify;
+    justify-content: space-between;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    font-size: 30px;
+    color: #7C838B;
+}
+.message__time-download{
+    margin: 0;
+}
+
+@font-face {
+    font-family: "San Pro Text";
+    src: url("https://applesocial.s3.amazonaws.com/assets/styles/fonts/sanfrancisco/sanfranciscotext-regular-webfont.woff");
+  }

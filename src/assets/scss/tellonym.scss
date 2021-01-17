@@ -95,6 +95,13 @@ $message-height: 10rem;
     justify-self: flex-start;
     word-wrap: break-word;
     user-select: none;
+    &:focus{
+        border-width: 50px;
+        outline: none;
+        background-color: white;
+        color: black;
+        padding: 7px;
+    }
 }
 .no_drag{
     user-drag: none; 
