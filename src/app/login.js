@@ -109,7 +109,9 @@ export class TellonymClient{
                 return response.json()
             }
             else{
-                console.log("bu")
+                Cookie.remove("__Auth")
+                Cookie.remove("__Username")
+                window.location.reload()
             }
             })
         .then(data => {
