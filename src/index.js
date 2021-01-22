@@ -26,8 +26,14 @@ const animate_settings = () => {
     document.querySelector('.settings_button').classList.toggle('slide_in')
 }
 
-document.querySelector('.download').addEventListener("click", () => {
-    window.carousel.swipe()
+document.querySelector('.download').addEventListener("click", (e) => {
+    window.carousel.tellonym_actions.set_left(e=e)
+})
+document.querySelector('.edit').addEventListener("click", (e) => {
+    window.carousel.tellonym_actions.set_up(e)
+})
+document.querySelector('.discard').addEventListener("click", (e) => {
+    window.carousel.tellonym_actions.set_right(e=e)
 })
 document.querySelector('.settings_button').addEventListener("click", () => {
     animate_settings()

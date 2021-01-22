@@ -16,7 +16,8 @@ export class Carousel {
 
         this.downloader = new TellonymHandler()
 
-        
+        this.tellonym_actions = new TellonymActions(this)
+
         this.tellonym_client.getTellonyms(function(data) {
             let x 
             for (x of data){
@@ -30,6 +31,7 @@ export class Carousel {
         this.cards = this.board.querySelectorAll('.tellonym--active')
         this.topCard = this.cards[this.cards.length - 1]
         this.nextCard = this.cards[this.cards.length - 2]
+        
         if (this.cards.length > 0) {
             let icon
             this.icons = {}
@@ -125,70 +127,30 @@ export class Carousel {
             'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg) scale(1)'
 
         // scale up next card
-        if (this.nextCard) this.nextCard.style.transform =
-            'scale(' + scale + ')'
+        if (this.nextCard) this.nextCard.style.transform = 'scale(' + scale + ')'
 
         if (e.isFinal) {
 
             this.isPanning = false
 
-            let successful = false
-            
-            this.topCard.style.transition = 'transform 800ms ease-out'
-            if (this.nextCard) this.nextCard.style.transition = 'transform 100ms linear'
-
             if (propX > 0.25 && e.direction == Hammer.DIRECTION_RIGHT) {
-                successful = true
-                posX = window.innerWidth + this.topCard.clientWidth
-                this.tellonym_client.updateTellonym(this.topCard.id, "DISCARDED")
 
+                this.tellonym_actions.set_right()
+                
             } else if (propX < -0.25 && e.direction == Hammer.DIRECTION_LEFT) {
-                successful = true
-                posX = -(window.innerWidth + this.topCard.clientWidth)
-                this.tellonym_client.updateTellonym(this.topCard.id, "ACCEPTED")
-                this.downloader.download(this.topCard.querySelector(".content__text").innerHTML)
 
+                this.tellonym_actions.set_left()
+                
             } else if (propY < -0.25 && e.direction == Hammer.DIRECTION_UP) {
 
-                successful = false
-                
-                let content_text = this.topCard.querySelector(".content__text")
-                content_text.contentEditable = true
-                setTimeout(function() {
-                    content_text.focus();
-                    setEndOfContenteditable(content_text)
-                }, 0);
-                
-
-                
-            }
-
-            if (successful) {
-
-                // throw card in the chosen direction
-                this.topCard.style.transform =
-                    'translateX(' + posX + 'px) translateY(' + posY + 'px) rotate(' + deg + 'deg)'
-
-                // wait transition end
-                setTimeout(() => {
-                    // remove swiped card
-                    this.board.removeChild(this.topCard)
-                    this.handle()
-                }, 200)
+                this.tellonym_actions.set_up()
 
             } else {
 
-                // reset cards position and size
-                this.topCard.style.transform =
-                    'rotate(0deg) rotateY(0deg) scale(1)'
-                if (this.nextCard) this.nextCard.style.transform =
-                    'scale(0.95)'
-                let icon
-                for (icon in this.icons){
-                    this.icons[icon].style.opacity = 0
-                }
-            }
+                this.tellonym_actions.reset()
 
+            }
+                
         }
 
     }
@@ -200,20 +162,6 @@ export class Carousel {
         for (icon in temp_icons){
             if (this.icons[icon].style.opacity!=0) this.icons[icon].style.opacity = 0
         }
-    }
-
-    swipe() {
-        let topCard = this.topCard
-        topCard.style.transition = 'transform 800ms ease-out'
-        topCard.style.transform = 'translateX(-' + window.innerWidth  + 'px) rotate(-45deg)'
-        if (this.nextCard) this.nextCard.style.transition = 'transform 300ms linear'
-        topCard.classList.toggle('tellonym--active')
-        topCard.querySelector('.tellonym__message--download').style.opacity = 1
-        this.handle()
-        setTimeout(() => {
-                    this.board.removeChild(topCard)
-        }, 800)
-        
     }
 
     push(text, id) {
@@ -237,6 +185,100 @@ export class Carousel {
         */
         }
 }
+
+class TellonymActions{
+    constructor(Carousel){
+        this.carousel = Carousel
+        
+    }
+
+    set_left(e=null){
+        let topCard = this.carousel.topCard
+        this.posX = -(window.innerWidth + topCard.clientWidth)
+        this.action = "download"
+        this.do_animation(e)
+        this.carousel.tellonym_client.updateTellonym(topCard.id, "ACCEPTED")
+        this.carousel.downloader.download(topCard.querySelector(".content__text").innerHTML)
+        
+    }
+    set_right(e=null){
+        let topCard = this.carousel.topCard
+        this.posX = (window.innerWidth + topCard.clientWidth)
+        this.action = "discard"
+
+        this.carousel.tellonym_client.updateTellonym(topCard.id, "DISCARDED")
+        this.do_animation(e)
+    }
+    set_up(){
+        this.action = "edit"
+
+        let content_text = this.carousel.topCard.querySelector(".content__text")
+        content_text.contentEditable = true
+        setTimeout(function() {
+            content_text.focus()
+            setEndOfContenteditable(content_text)
+        }, 0);
+        this.reset()
+    }
+    do_animation(e){
+
+        let topCard = this.carousel.topCard
+
+        topCard.style.transition = 'transform 1500ms ease-out'
+        if (this.carousel.nextCard) this.carousel.nextCard.style.transition = 'transform 100ms linear'
+
+        let temp_style = topCard.style.transform
+        topCard.style.transform = temp_style.replace(/translateX\(.*?\)/g, `translateX(${this.posX}px)`)
+        
+        if (e){
+            topCard.style.transform += `translateX(${this.posX}px)`
+            switch(e.srcElement.classList[1]){
+                case "discard":
+                    topCard.style.transform += 'rotate(45deg)'
+                    break
+                case "download":
+                    topCard.style.transform += 'rotate(-45deg)'
+                    break
+            }
+        }
+        topCard.classList.toggle('tellonym--active')
+        
+        switch(this.action){
+            case "download":
+                this.carousel.icons["download"].style.opacity = 1
+                break
+            case "discard":
+                this.carousel.icons["discard"].style.opacity = 1
+                break
+        }
+            
+        setTimeout(() => {
+                    this.carousel.board.removeChild(topCard)
+                    this.carousel.handle()
+        }, 800)
+    }
+    reset(){
+        let topCard = this.carousel.topCard
+        let nextCard = this.carousel.nextCard
+
+        topCard.style.transition = 'transform 500ms ease-out'
+        topCard.style.transform = 'rotate(0deg) rotateY(0deg) scale(1)'
+
+        if (nextCard) nextCard.style.transition = 'transform 100ms linear'
+        if (nextCard) nextCard.style.transform = 'scale(0.95)'
+
+        let icon
+        for (icon in this.carousel.icons){
+            this.carousel.icons[icon].style.opacity = 0
+        }
+        setTimeout(function(){
+            topCard.style.transition = ''
+            if (nextCard) nextCard.style.transition = ''
+        }.bind(this), 500)
+    }
+    
+}
+
 
 class TellonymHandler{
 

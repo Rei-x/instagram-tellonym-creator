@@ -118,7 +118,7 @@ export class TellonymClient{
             callback(data)
         })
         .catch((e) => {
-            console.log("niezalogowany", e)
+            console.log("Niezalogowany", e)
         })
     }
     updateTellonym(tellonym_id, state) {
@@ -133,12 +133,14 @@ export class TellonymClient{
               }
         })
         .then(response => {
+            /*
             if (response.status == 204){
                 console.log("udało się")
             }
+            */
         })
         .catch((e) => {
-            console.log("błąd")
+            console.log("Error", e)
         })
     }
 

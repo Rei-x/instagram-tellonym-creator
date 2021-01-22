@@ -3,6 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const ImageMinimizerPlugin = require('image-minimizer-webpack-plugin');
+const FaviconsWebpackPlugin = require('favicons-webpack-plugin');
 
 const config = (_, {mode}) => ({
   entry: './src/index.js',
@@ -36,7 +37,17 @@ const config = (_, {mode}) => ({
         options: {
           name: '[name].[contenthash].[ext]'
         }    
-        
+      },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env'],
+            plugins: ["transform-decorators-legacy"],
+          }
+        }
       }
     ]
   },
@@ -63,6 +74,11 @@ const config = (_, {mode}) => ({
           ]
         ]
       }
+    }),
+    new FaviconsWebpackPlugin( {
+      logo: path.join(__dirname, 'src/assets/img/', 'logo.png'),
+      prefix: 'assets/',
+      outputPath: 'auto/assets',
     })
   ]
 });
