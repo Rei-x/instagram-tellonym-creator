@@ -8,11 +8,11 @@ import { TellonymClient } from './login'
 
 export class Carousel {
 
-    constructor(element) {
+    constructor(element, url) {
         this.board = element
         this._iconsName = ["discard", "edit", "download"]
         
-        this.tellonym_client = new TellonymClient()
+        this.tellonym_client = new TellonymClient(url)
 
         this.downloader = new TellonymHandler()
 
@@ -59,10 +59,6 @@ export class Carousel {
             })
 
         }
-        else{
-            console.log("yay")
-        }
-
     }
 
 
@@ -194,25 +190,35 @@ class TellonymActions{
 
     set_left(e=null){
         let topCard = this.carousel.topCard
+        let tellonym_text = topCard.querySelector(".content__text").innerHTML
+
         this.posX = -(window.innerWidth + topCard.clientWidth)
         this.action = "download"
+
         this.do_animation(e)
-        this.carousel.tellonym_client.updateTellonym(topCard.id, "ACCEPTED")
-        this.carousel.downloader.download(topCard.querySelector(".content__text").innerHTML)
+
+        let text = topCard.dataset.edited ? tellonym_text : null
+        this.carousel.tellonym_client.updateTellonym(topCard.id, "ACCEPTED", text=text)
+
+        this.carousel.downloader.download(tellonym_text)
         
     }
     set_right(e=null){
         let topCard = this.carousel.topCard
+        let tellonym_text = topCard.querySelector(".content__text").innerHTML
+
         this.posX = (window.innerWidth + topCard.clientWidth)
         this.action = "discard"
 
-        this.carousel.tellonym_client.updateTellonym(topCard.id, "DISCARDED")
+        let text = topCard.dataset.edited ? tellonym_text : null
+        this.carousel.tellonym_client.updateTellonym(topCard.id, "DISCARDED", text=text)
         this.do_animation(e)
     }
     set_up(){
+        let topCard = this.carousel.topCard
         this.action = "edit"
-
-        let content_text = this.carousel.topCard.querySelector(".content__text")
+        topCard.dataset.edited = true
+        let content_text = topCard.querySelector(".content__text")
         content_text.contentEditable = true
         setTimeout(function() {
             content_text.focus()
@@ -274,7 +280,7 @@ class TellonymActions{
         setTimeout(function(){
             topCard.style.transition = ''
             if (nextCard) nextCard.style.transition = ''
-        }.bind(this), 500)
+        }, 500)
     }
     
 }

@@ -4,8 +4,8 @@ import Cookie from 'js-cookie'
 
 export class Login{
 
-    constructor(){
-        this.url = "https://lit-scrubland-16305.herokuapp.com/api"
+    constructor(url){
+        this.url = url
         this.logged = false
         this.auth = Cookie.get("__Auth")
         this.username = Cookie.get("__Username")
@@ -41,7 +41,6 @@ export class Login{
 
         let login_url = this.url + "/login/"
         
-        console.log(Array.from(formData.values()))
         
         fetch(login_url, {
             method: 'POST',
@@ -85,8 +84,8 @@ export class Login{
 
 export class TellonymClient{
 
-    constructor(){
-        this.url = "https://lit-scrubland-16305.herokuapp.com/api"
+    constructor(url){
+        this.url = url
         this.list_endpoint = "/list/"
         this.update_endpoint = "/patch/"
     }
@@ -121,15 +120,23 @@ export class TellonymClient{
             console.log("Niezalogowany", e)
         })
     }
-    updateTellonym(tellonym_id, state) {
+    updateTellonym(tellonym_id, state, text=null) {
+        this.username = Cookie.get("__Username")
+        this.auth = Cookie.get("__Auth")
         const url = this.url + this.update_endpoint + tellonym_id + "/"
-        const tellonym_state = {"state": state}
+        const body = {"state": state}
+        if(text){
+            body.text = text
+        }
+
         fetch(url, {
             method: 'PATCH',
             credentials: 'include',
-            body: JSON.stringify(tellonym_state),
+            body: JSON.stringify(body),
             headers: {
-                'Content-Type': 'application/json'
+                'Content-Type': 'application/json',
+                'Auth': this.auth,
+                'Username': this.username
               }
         })
         .then(response => {
