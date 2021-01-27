@@ -24,7 +24,6 @@ export class Carousel {
                 this.push(x.fields.text, x.pk)
             }
         }.bind(this))
-        this.handle()
     }
 
     handle() {
