@@ -2,6 +2,8 @@ import "./assets/scss/style.scss"
 import { Carousel } from './app/tinder'
 import { Login } from './app/login'
 import settings from './assets/html/settings.html'
+import { change_mode, turn_on_darkmode } from './app/dark_mode'
+import Cookie from 'js-cookie'
 
 
 var mode
@@ -50,4 +52,11 @@ document.querySelector('.view_settings__back').addEventListener("click", () => {
     animate_settings()
 })
 
+document.querySelector('.darkmode_switch').addEventListener("change", (e) => {
+    change_mode(e)
+})
 
+if(Cookie.get("darkmode") == "true"){
+    turn_on_darkmode()
+    document.querySelector('.darkmode_switch').checked = true
+}
