@@ -32,11 +32,15 @@ const config = (_, {mode}) => ({
         ]
       },
       {
-        test: /\.(svg|jpg|gif|png)$/,
+        test: /\.(jpg|gif|png)$/,
         loader: 'file-loader',
         options: {
           name: '[name].[contenthash].[ext]'
         }    
+      },
+      {
+        test: /\.svg$/,
+        type: 'asset'
       },
       {
         test: /\.js$/,
