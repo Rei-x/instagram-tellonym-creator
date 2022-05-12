@@ -3,10 +3,10 @@ import Image from 'next/image';
 import React from 'react';
 import ThreeDotsImage from "../assets/img/three_dots.svg";
 
-const Tellonym = ({ value }: { value: string; }) => {
+const Tellonym = React.forwardRef<HTMLDivElement | null, { value: string; }>(function Tellonym({ value }: { value: string; }, ref) {
   return (
     <Box
-      mx="auto"
+      ref={ref}
       height="400px"
       width="400px"
       display="flex"
@@ -18,7 +18,7 @@ const Tellonym = ({ value }: { value: string; }) => {
       backgroundSize="contain">
       <Box backgroundColor="#1A222F" mx={7} p={4} width="300px">
         <Box display="flex" alignItems="flex-start" justifyContent="space-between">
-          <Text color="#CBCED3">{value}
+          <Text color="#CBCED3">{value || "Wpisz tellonyma! Tym razem obsługuje emotki 😎😎"}
           </Text>
           <Image width="8" height="20" alt="" src="/img/three_dots.svg" />
         </Box>
@@ -29,6 +29,6 @@ const Tellonym = ({ value }: { value: string; }) => {
       </Box>
     </Box>
   );
-};
+});
 
 export default Tellonym;

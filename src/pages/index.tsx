@@ -1,13 +1,17 @@
-import { Container, Divider, Heading, Input, InputGroup, InputRightAddon, InputRightElement } from '@chakra-ui/react';
+import { Button, Container, Divider, Heading, HStack, Input, InputGroup, InputRightAddon, InputRightElement, Stack } from '@chakra-ui/react';
 import type { NextPage } from 'next';
 import Head from 'next/head';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import Tellonym from '../components/Tellonym';
+import useRefToImage from '../hooks/useRefToImage';
+import useClipboard from '../hooks/useClipboard';
 
 const Home: NextPage = () => {
-  const [input, setInput] = useState("Wpisz tellonyma! Tym razem obsługuje emotki 😎😎");
-
+  const [input, setInput] = useState("");
+  const ref = useRef(null);
+  const { downloadImage } = useRefToImage(ref);
+  const { readText } = useClipboard();
 
   return (
     <div>
@@ -17,13 +21,22 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <Container mt={6}>
-        <Heading>Telloner</Heading>
-        <InputGroup mt={3} mb={3}>
-          <Input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
-          <InputRightAddon>Wklej</InputRightAddon>
-
-        </InputGroup>
-        <Tellonym value={input} />
+        <Heading textAlign="center" mb={4}>Telloner</Heading>
+        <HStack alignItems="center" mb={3}>
+          <InputGroup>
+            <Input type="text" value={input} onChange={(e) => setInput(e.target.value)} />
+            <InputRightAddon as="button" onClick={async () => {
+              const text = await readText();
+              if (text) {
+                setInput(text);
+              } else {
+                console.log("nie ma nic w schowku");
+              }
+            }}>Wklej</InputRightAddon>
+          </InputGroup>
+          <Button colorScheme="green" onClick={() => downloadImage()}>Pobierz</Button>
+        </HStack>
+        <Tellonym ref={ref} value={input} />
       </Container>
 
     </div>
